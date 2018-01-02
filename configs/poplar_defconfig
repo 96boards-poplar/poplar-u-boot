@@ -4,6 +4,7 @@ CONFIG_IDENT_STRING="poplar"
 CONFIG_DEFAULT_DEVICE_TREE="hi3798cv200-poplar"
 CONFIG_DISTRO_DEFAULTS=y
 # CONFIG_ANDROID_BOOT_IMAGE is not set
+CONFIG_BOOTCOMMAND="usb start; fatload usb 0:1 ${scriptaddr} recovery_files/install.scr; source ${scriptaddr}"
 # CONFIG_DISPLAY_CPUINFO is not set
 CONFIG_SYS_PROMPT="poplar# "
 CONFIG_FASTBOOT=y
