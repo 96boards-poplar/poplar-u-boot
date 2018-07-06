@@ -59,13 +59,42 @@ int misc_init_r(void)
 
 int board_eth_init(bd_t *bd)
 {
-	int ret = 0;
+	u8 mac_addr[6];
+	int ret;
+	int i;
 
 	ret = higmac_initialize(bd);
+	if (ret)
+		return ret;
 
-	return ret;
+	/* Generate MAC address from MMC Product Serial Number */
+	mac_addr[0] = 0x96;
+	mac_addr[1] = 0x00;
+	for (i = 0; i < 4; i++)
+		mac_addr[i + 2] = gd->mmc_psn[i];
+
+	if (!is_valid_ethaddr(mac_addr)) {
+		printf("MAC address generated from MMC PSN is invalid\n");
+		return -1;
+	}
+
+	eth_env_set_enetaddr("ethaddr", mac_addr);
+
+	return 0;
 }
 
+#ifdef CONFIG_OF_BOARD_SETUP
+int ft_board_setup(void *blob, bd_t *bd)
+{
+	u8 mac_addr[6];
+
+	if (eth_env_get_enetaddr("ethaddr", mac_addr))
+		fdt_find_and_setprop(blob, "/soc@f0000000/ethernet@9841000",
+				     "local-mac-address", mac_addr, 6, 1);
+
+	return 0;
+}
+#endif
 
 int checkboard(void)
 {
