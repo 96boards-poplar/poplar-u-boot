@@ -22,6 +22,8 @@
 #include <div64.h>
 #include "mmc_private.h"
 
+DECLARE_GLOBAL_DATA_PTR;
+
 static const unsigned int sd_au_size[] = {
 	0,		SZ_16K / 512,		SZ_32K / 512,
 	SZ_64K / 512,	SZ_128K / 512,		SZ_256K / 512,
@@ -1581,6 +1583,10 @@ static int mmc_startup(struct mmc *mmc)
 #if !defined(CONFIG_SPL_BUILD) || defined(CONFIG_SPL_LIBDISK_SUPPORT)
 	part_init(bdesc);
 #endif
+	gd->mmc_psn[0] =  (mmc->cid[3] >> 16) & 0xff;
+	gd->mmc_psn[1] =  (mmc->cid[3] >> 24) & 0xff;
+	gd->mmc_psn[2] =  mmc->cid[2] & 0xff;
+	gd->mmc_psn[3] =  (mmc->cid[2] >> 8) & 0xff;
 
 	return 0;
 }

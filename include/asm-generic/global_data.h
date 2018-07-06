@@ -119,6 +119,9 @@ typedef struct global_data {
 	int default_log_level;		/* For devices with no filters */
 	struct list_head log_head;	/* List of struct log_device */
 #endif
+#ifdef CONFIG_MMC
+	char mmc_psn[4];		/* MMC Product Serial Number */
+#endif
 } gd_t;
 #endif
 
