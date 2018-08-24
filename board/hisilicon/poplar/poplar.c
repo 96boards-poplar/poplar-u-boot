@@ -13,6 +13,7 @@
 #include <asm/arch/hi3798cv200.h>
 #include <asm/arch/dwmmc.h>
 #include <asm/armv8/mmu.h>
+#include <fdt_support.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 
