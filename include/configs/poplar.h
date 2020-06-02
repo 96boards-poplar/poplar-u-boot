@@ -23,8 +23,8 @@
 #define CONFIG_SYS_LOAD_ADDR			0x04800000
 #define CONFIG_SYS_MALLOC_LEN			SZ_32M
 
-/* ATF bl33.bin load address (must match) */
-#define CONFIG_SYS_TEXT_BASE			0x37000000
+/* u-boot.bin load address (must match) LLOADER_TEXT_BASE(0x02001000)+UBOOT_OFFSETi(0x0000D000)*/
+#define CONFIG_SYS_TEXT_BASE			0x0200E000
 
 /* PL010/PL011 */
 #define CONFIG_PL01X_SERIAL
